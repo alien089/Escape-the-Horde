@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer sprite;
     private Animator anim;
     public Transform respawnPoint;
+    public string nextScene;
 
     public float speed = 50;
     public float stealthSpeed = 0f;
@@ -34,6 +36,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(objective == 5)
+        {
+            SceneManager.LoadScene(nextScene);
+        }
         if(Mathf.Abs(rb.velocity.x) > 0.001f || Mathf.Abs(rb.velocity.y) > 0.001f)
             anim.SetBool("isMoving", true);
         else

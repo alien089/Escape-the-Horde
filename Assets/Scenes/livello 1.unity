@@ -2209,9 +2209,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawnPoint: {fileID: 1796989554}
+  nextScene: livello 2
   speed: 8.5
+  stealthSpeed: 0
   startDashTime: 0.1
   dashSpeed: 50
+  isStealth: 0
 --- !u!61 &319599736
 BoxCollider2D:
   m_ObjectHideFlags: 0
