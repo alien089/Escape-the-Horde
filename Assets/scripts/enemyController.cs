@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
 public class enemyController : MonoBehaviour, IEnemy
@@ -10,6 +11,7 @@ public class enemyController : MonoBehaviour, IEnemy
     private GameObject coneView;
     private PlayerController player;
     private Animator anim;
+    private NavMeshAgent agent;
     public float speed = 20f;
     public float time = 0f;
     private bool waiting = true;
@@ -23,6 +25,9 @@ public class enemyController : MonoBehaviour, IEnemy
         coneView.transform.Rotate(0, 0, startRound);
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         anim = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
     }
 
     private void Update()
@@ -31,7 +36,8 @@ public class enemyController : MonoBehaviour, IEnemy
         {
             if (!player.isStealth || alerted)
             {
-                transform.position = Vector3.MoveTowards(transform.position, player.transform.position, (speed / 100));
+                agent.destination = player.transform.position;
+                //transform.position = Vector3.MoveTowards(transform.position, player.transform.position, (speed / 100));
                 anim.SetBool("isMoving", true);
                 coneView.gameObject.SetActive(false);
             }
