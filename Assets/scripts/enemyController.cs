@@ -10,8 +10,8 @@ public class enemyController : MonoBehaviour, IEnemy
 {
     private GameObject coneView;
     private PlayerController player;
-    private NavMeshAgent navMesh;
     private Animator anim;
+    private NavMeshAgent agent;
     public float speed = 20f;
     public float time = 0f;
     private bool waiting = true;
@@ -25,9 +25,9 @@ public class enemyController : MonoBehaviour, IEnemy
         coneView.transform.Rotate(0, 0, startRound);
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         anim = GetComponent<Animator>();
-        navMesh = GetComponent<NavMeshAgent>();
-        navMesh.updateRotation = false;
-        navMesh.updateUpAxis = false;
+        agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
     }
 
     private void Update()
@@ -36,8 +36,8 @@ public class enemyController : MonoBehaviour, IEnemy
         {
             if (!player.isStealth || alerted)
             {
+                agent.destination = player.transform.position;
                 //transform.position = Vector3.MoveTowards(transform.position, player.transform.position, (speed / 100));
-                navMesh.destination = player.transform.position;
                 anim.SetBool("isMoving", true);
                 coneView.gameObject.SetActive(false);
             }
